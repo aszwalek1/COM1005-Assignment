@@ -13,6 +13,15 @@ public class EpuzzGen {
    int[][] tar = new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 0}};
    Random gen;
 
+   /*
+      generator given seed
+      int seed = 23456;
+      EpuzzGen gen = new EpuzzGen(seed);
+      generate puzzle providing difficulty
+      int d = 6; (6 - 12(hard))
+      int[][] puzz = gen.puzzGen(d);
+   */
+
    public EpuzzGen() {
       this.gen = new Random();
    }

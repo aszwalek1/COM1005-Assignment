@@ -2,15 +2,19 @@
  * search for 8-puzzle
  */
 public class EpuzzleSearch extends Search {
-    //private Carta map;
-    private String goal;
-    //there was a getMap()
+
+    private int target;
 
     public String getGoal() {
         return goal;
     }
-    public EpuzzleSearch(String g) {
-        //map = m;
-        goal = g;
+    public EpuzzleSearch(int tar) {
+        target = tar;
+    }
+    /**
+    * accessor for target
+    */
+    public int getTarget() {
+        return target;
     }
 }
