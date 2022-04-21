@@ -5,7 +5,7 @@
 public class RunEpuzzleBFS {
 
     public static void main(String[] arg) {
-        //add sth in the brackets
+        //add sth in the brackets:
         EpuzzleSearch searcher = new EpuzzleSearch();
         SearchState initState = (SearchState) new EpuzzleState();
 

@@ -3,18 +3,32 @@
  */
 public class EpuzzleSearch extends Search {
 
+    private int order; //?
     private int target;
 
-    public String getGoal() {
-        return goal;
-    }
-    public EpuzzleSearch(int tar) {
+    /**
+     * constructor
+     * @param ord //?
+     * @param tar
+     * 
+     */
+    public EpuzzleSearch(int tar, int ord) {
+        order = ord;
         target = tar;
     }
+
+    /**
+    * accessor for order
+    */
+    public int getOrder() {
+        return order;
+    }
+    
     /**
     * accessor for target
     */
     public int getTarget() {
         return target;
     }
+    
 }
