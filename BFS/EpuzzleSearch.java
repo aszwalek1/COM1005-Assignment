@@ -3,33 +3,22 @@
  */
 public class EpuzzleSearch extends Search {
 
-    private int order; //?
-    private int target;
+    private int[][] target;
 
     /**
      * constructor
-     * @param ord //?
      * @param tar
      * 
      */
-    public EpuzzleSearch(){}
 
-    public EpuzzleSearch(int tar, int ord) {
-        order = ord;
-        target = tar;
+    public EpuzzleSearch() {
+        target = new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 0}};
     }
 
-    /**
-    * accessor for order
-    */
-    public int getOrder() {
-        return order;
-    }
-    
     /**
     * accessor for target
     */
-    public int getTarget() {
+    public int[][] getTarget() {
         return target;
     }
     
