@@ -19,7 +19,7 @@ public class EpuzzleState extends SearchState {
      * @return currState
      */
     public int get_currState() {
-        return currState;
+        return currentState;
     }
     public boolean goalPredicate(Search searcher) {
         EpuzzleSearch esearcher = (EpuzzleSearch) searcher;
@@ -51,8 +51,15 @@ public class EpuzzleState extends SearchState {
         /**
          * toString
          */
-        public String toString() {
+    }
+
+    public boolean sameState(SearchState n2){
+
+        //TODO
+        return false;
+    }
+    public String toString() {
             return "8-puzzle State: ";
-        }
+        
     }
 }

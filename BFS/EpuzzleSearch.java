@@ -12,6 +12,8 @@ public class EpuzzleSearch extends Search {
      * @param tar
      * 
      */
+    public EpuzzleSearch(){}
+
     public EpuzzleSearch(int tar, int ord) {
         order = ord;
         target = tar;
