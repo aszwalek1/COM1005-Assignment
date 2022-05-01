@@ -5,11 +5,6 @@ public class EpuzzleSearch extends Search {
 
     private int[][] target;
 
-    /**
-     * constructor
-     * @param tar
-     * 
-     */
 
     public EpuzzleSearch() {
         target = new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 0}};
