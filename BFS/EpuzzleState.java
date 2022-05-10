@@ -5,131 +5,112 @@
 import java.util.*;
 public class EpuzzleState extends SearchState {
     
+    // current state
     private int[][] state;
 
 
-    /**
-    * constructor
-    * @param state 
-    */
+    // constructor
     public EpuzzleState(int[][] s) {
         state = s;
     }
 
-    /**
-     * accessor for the current state
-     * @return state
-     */
+    // accessor for the current state
+     
     public int[][] getState() {
         return state;
     }
     public boolean goalPredicate(Search searcher) {
         EpuzzleSearch esearcher = (EpuzzleSearch) searcher;
         int[][] tar = esearcher.getTarget();  
-        return state == tar; 
+        return Arrays.deepEquals(state,tar); 
     }
-    /**
-     * getSuccessors
-     * 
-     */
-    private int[][] swapIndexes(int i2) { // (0;8)
-        int i1 = 0;
-        while(state[i1 / 3][i1 % 3] != 0) {
-            i1++;
-        }
-        
-        int[][] swappedState = new int[3][3]; 
-        for(int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                swappedState[i][j] = state[i][j];
-            }
-        }
-        swappedState[i1 / 3][i1 % 3] = swappedState[i2 / 3][i2 % 3];
-        swappedState[i2 / 3][i2 % 3] = 0;
-        System.out.println("SwappedState: \n" 
-        + swappedState[0][0] + " " + swappedState[0][1] + " " + swappedState[0][2] + "\n" 
-            + swappedState[1][0] + " " + swappedState[1][1] + " " + swappedState[1][2] + "\n"
-            + swappedState[2][0] + " " + swappedState[2][1] + " " + swappedState[2][2] + "\n"
-        );
-        return swappedState;
-    } 
+    
 
+    // getSuccessors
+    
     public ArrayList<SearchState> getSuccessors(Search searcher) {
-        EpuzzleSearch esearcher = (EpuzzleSearch) searcher;
 
         ArrayList<EpuzzleState> elist = new ArrayList<EpuzzleState>();
         ArrayList<SearchState> slist = new ArrayList<SearchState>();
 
-        //how the whole game works:
+        int pos = 0;
+        for(int[] x : state) {
+            for(int y =  0; y < x.length; y++) {
+                int[][] stateCopy = new int[state.length][3];
 
-        //if the 0 in state is in corner position a or b or c or d:
-            //add successors for swapping 0 out of the corner
-        if (state[0][0] == 0) {
-            elist.add(new EpuzzleState(swapIndexes(1)));
-            elist.add(new EpuzzleState(swapIndexes(3)));
-        }
-        else if (state[0][1] == 0) {
-            elist.add(new EpuzzleState(swapIndexes(0)));
-            elist.add(new EpuzzleState(swapIndexes(2)));
-            elist.add(new EpuzzleState(swapIndexes(4)));
-        }
-        else if (state[0][2] == 0) {
-            elist.add(new EpuzzleState(swapIndexes(1)));
-            elist.add(new EpuzzleState(swapIndexes(5)));
-        }
-        else if (state[1][0] == 0) {
-            elist.add(new EpuzzleState(swapIndexes(0)));
-            elist.add(new EpuzzleState(swapIndexes(4)));
-            elist.add(new EpuzzleState(swapIndexes(6)));
-        }
-        else if (state[1][1] == 0) {
-            elist.add(new EpuzzleState(swapIndexes(1)));
-            elist.add(new EpuzzleState(swapIndexes(3)));
-            elist.add(new EpuzzleState(swapIndexes(5)));
-            elist.add(new EpuzzleState(swapIndexes(7)));
-        }
-        else if (state[1][2] == 0) {
-            elist.add(new EpuzzleState(swapIndexes(2)));
-            elist.add(new EpuzzleState(swapIndexes(4)));
-            elist.add(new EpuzzleState(swapIndexes(8)));
-        }
-        else if (state[2][0] == 0) {
-            elist.add(new EpuzzleState(swapIndexes(3)));
-            elist.add(new EpuzzleState(swapIndexes(7)));
-        }
-        else if (state[2][1] == 0) {
-            elist.add(new EpuzzleState(swapIndexes(4)));
-            elist.add(new EpuzzleState(swapIndexes(6)));
-            elist.add(new EpuzzleState(swapIndexes(8)));
+                for(int z = 0; z < state.length; z++) {
+                    stateCopy[z] = state[z].clone();
+                }
+                
+                // checks if position (j) is at extreme right
 
-        }
-        else if (state[2][2] == 0) {
-            elist.add(new EpuzzleState(swapIndexes(5)));
-            elist.add(new EpuzzleState(swapIndexes(7)));
-        }
-
-
+                if (y != 2) {
+                    if (x[y + 1] == 0) {
+                      int placeholder = stateCopy[pos][y];
+                      stateCopy[pos][y] = stateCopy[pos][y + 1];
+                      stateCopy[pos][y + 1] = placeholder;
+                      elist.add(new EpuzzleState(stateCopy));
+          
+                    }
+                  }
+                  // checks if position (j) is at extreme left
+                  if (y != 0) {
+                    if (x[y - 1] == 0) {
+                      int placeholder = stateCopy[pos][y];
+                      stateCopy[pos][y] = stateCopy[pos][y - 1];
+                      stateCopy[pos][y - 1] = placeholder;
+                      elist.add(new EpuzzleState(stateCopy));
+          
+                    }
+          
+                  }
+          
+                  // checks if positon (j) is at the extreme bottom
+                  if (pos != 2) {
+                    if (state[pos + 1][y] == 0) {
+                      int placeholder = stateCopy[pos][y];
+                      stateCopy[pos][y] = stateCopy[pos + 1][y];
+                      stateCopy[pos + 1][y] = placeholder;
+                      elist.add(new EpuzzleState(stateCopy));
+                    }
+                  }
+          
+                  // checks if position (j) is at the extreme top
+                  if (pos != 0) {
+                    if (state[pos - 1][y] == 0) {
+                      int placeholder = stateCopy[pos][y];
+                      stateCopy[pos][y] = stateCopy[pos - 1][y];
+                      stateCopy[pos - 1][y] = placeholder;
+                      elist.add(new EpuzzleState(stateCopy));
+                    }
+                  }
+          
+                }
+                pos++;
+            }
+            
         //cast the puzzle states
         for(EpuzzleState es : elist) 
             slist.add((SearchState) es);
         return slist;
-
-        
     }
 
     public boolean sameState(SearchState n2) {
 
         EpuzzleState e2 = (EpuzzleState) n2;
 
-        return Arrays.equals(state[0], e2.getState()[0]) &&
-        Arrays.equals(state[1], e2.getState()[1]) &&
-        Arrays.equals(state[2], e2.getState()[2]) ;
+        return Arrays.deepEquals(state, e2.state);
     }
     public String toString() {
-            return "\n"
-            + state[0][0] + " " + state[0][1] + " " + state[0][2] + "\n" 
-            + state[1][0] + " " + state[1][1] + " " + state[1][2] + "\n"
-            + state[2][0] + " " + state[2][1] + " " + state[2][2] + "\n"
-            ;
+        String s = "\n";
+
+        for(int i = 0; i < state.length; i++) {
+            for(int k = 0; k < state[i].length; k++) {
+                s += state[i][k] + " ";
+            }
+            s += "\n";
+        }
+        return s;
+    
     }
 }
