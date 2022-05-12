@@ -39,11 +39,30 @@ public class EpuzzleState extends SearchState {
                 int[][] stateCopy = new int[state.length][3];
 
                 for(int z = 0; z < state.length; z++) {
-                    stateCopy[z] = state[z].clone();
+                  stateCopy[z] = state[z].clone();
                 }
                 
-                // checks if position (j) is at extreme right
+                // check if 0 is at the extreme top
+                if (pos != 0) {
+                  if (state[pos - 1][y] == 0) {
+                    int placeholder = stateCopy[pos][y];
+                    stateCopy[pos][y] = stateCopy[pos - 1][y];
+                    stateCopy[pos - 1][y] = placeholder;
+                    elist.add(new EpuzzleState(stateCopy));
+                  }
+                }
 
+                // check if 0 is at the extreme bottom
+                if (pos != 2) {
+                  if (state[pos + 1][y] == 0) {
+                    int placeholder = stateCopy[pos][y];
+                    stateCopy[pos][y] = stateCopy[pos + 1][y];
+                    stateCopy[pos + 1][y] = placeholder;
+                    elist.add(new EpuzzleState(stateCopy));
+                  }
+                }
+
+                // check if 0 is at the extreme right
                 if (y != 2) {
                     if (x[y + 1] == 0) {
                       int placeholder = stateCopy[pos][y];
@@ -53,7 +72,8 @@ public class EpuzzleState extends SearchState {
           
                     }
                   }
-                  // checks if position (j) is at extreme left
+
+                  // check if 0 is at the extreme left
                   if (y != 0) {
                     if (x[y - 1] == 0) {
                       int placeholder = stateCopy[pos][y];
@@ -62,29 +82,7 @@ public class EpuzzleState extends SearchState {
                       elist.add(new EpuzzleState(stateCopy));
           
                     }
-          
                   }
-          
-                  // checks if positon (j) is at the extreme bottom
-                  if (pos != 2) {
-                    if (state[pos + 1][y] == 0) {
-                      int placeholder = stateCopy[pos][y];
-                      stateCopy[pos][y] = stateCopy[pos + 1][y];
-                      stateCopy[pos + 1][y] = placeholder;
-                      elist.add(new EpuzzleState(stateCopy));
-                    }
-                  }
-          
-                  // checks if position (j) is at the extreme top
-                  if (pos != 0) {
-                    if (state[pos - 1][y] == 0) {
-                      int placeholder = stateCopy[pos][y];
-                      stateCopy[pos][y] = stateCopy[pos - 1][y];
-                      stateCopy[pos - 1][y] = placeholder;
-                      elist.add(new EpuzzleState(stateCopy));
-                    }
-                  }
-          
                 }
                 pos++;
             }
@@ -95,12 +93,15 @@ public class EpuzzleState extends SearchState {
         return slist;
     }
 
+
     public boolean sameState(SearchState n2) {
 
         EpuzzleState e2 = (EpuzzleState) n2;
 
         return Arrays.deepEquals(state, e2.state);
     }
+
+
     public String toString() {
         String s = "\n";
 
