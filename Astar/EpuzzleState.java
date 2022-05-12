@@ -57,16 +57,16 @@ public class EpuzzleState extends SearchState {
 
     public static int hamming(int[][] stateCopy) {
       int[][] tar = {{1,2,3}, {4,5,6}, {7,8,0}}; 
-      int value = 0;
+      int outOfPlace = 0;
 
       for(int i = 0; i < 3; i++) {
         for(int k = 0; k < 3; k++) {
           if(stateCopy[i][k] != tar[i][k] && stateCopy[i][k] != 0) {
-            value++;
+            outOfPlace++;
           }
         }
       }
-      return value;
+      return outOfPlace;
     }
 
 

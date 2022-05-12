@@ -19,6 +19,9 @@ public class EpuzzleState extends SearchState {
     public int[][] getState() {
         return state;
     }
+
+    // goalPredicate
+
     public boolean goalPredicate(Search searcher) {
         EpuzzleSearch esearcher = (EpuzzleSearch) searcher;
         int[][] tar = esearcher.getTarget();  
