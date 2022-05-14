@@ -36,60 +36,66 @@ public class EpuzzleState extends SearchState {
         ArrayList<EpuzzleState> elist = new ArrayList<EpuzzleState>();
         ArrayList<SearchState> slist = new ArrayList<SearchState>();
 
-        int pos = 0;
+        int rowPointer = 0;
         for(int[] x : state) {
-            for(int y =  0; y < x.length; y++) {
+            for(int y = 0; y < x.length; y++) {
                 int[][] stateCopy = new int[state.length][3];
 
-                for(int z = 0; z < state.length; z++) {
-                  stateCopy[z] = state[z].clone();
+                //clones the state into a new array so it can be manipulated
+                for(int i = 0; i < state.length; i++) {
+                  stateCopy[i] = state[i].clone();
                 }
                 
-                // check if 0 is at the extreme top
-                if (pos != 0) {
-                  if (state[pos - 1][y] == 0) {
-                    int placeholder = stateCopy[pos][y];
-                    stateCopy[pos][y] = stateCopy[pos - 1][y];
-                    stateCopy[pos - 1][y] = placeholder;
+                // check that 0 not in the bottom row and swaps 0 with the number below
+                if (rowPointer != 0) {
+                  if (state[rowPointer - 1][y] == 0) {
+                    //standard code to swap 2 elements in an array
+                    int placeholder = stateCopy[rowPointer][y];
+                    stateCopy[rowPointer][y] = stateCopy[rowPointer - 1][y];
+                    stateCopy[rowPointer - 1][y] = placeholder;
                     elist.add(new EpuzzleState(stateCopy));
                   }
                 }
 
-                // check if 0 is at the extreme bottom
-                if (pos != 2) {
-                  if (state[pos + 1][y] == 0) {
-                    int placeholder = stateCopy[pos][y];
-                    stateCopy[pos][y] = stateCopy[pos + 1][y];
-                    stateCopy[pos + 1][y] = placeholder;
+                // check that 0 is not in the top row and swaps 0 with the number above
+                if (rowPointer != 2) {
+                  if (state[rowPointer + 1][y] == 0) {
+                    //standard code to swap 2 elements in an array
+                    int placeholder = stateCopy[rowPointer][y];
+                    stateCopy[rowPointer][y] = stateCopy[rowPointer + 1][y];
+                    stateCopy[rowPointer + 1][y] = placeholder;
                     elist.add(new EpuzzleState(stateCopy));
                   }
                 }
 
-                // check if 0 is at the extreme right
+                // check that 0 is not in the right column and swaps 0 with the number to the right
                 if (y != 2) {
                     if (x[y + 1] == 0) {
-                      int placeholder = stateCopy[pos][y];
-                      stateCopy[pos][y] = stateCopy[pos][y + 1];
-                      stateCopy[pos][y + 1] = placeholder;
+                      //standard code to swap 2 elements in an array
+                      int placeholder = stateCopy[rowPointer][y];
+                      stateCopy[rowPointer][y] = stateCopy[rowPointer][y + 1];
+                      stateCopy[rowPointer][y + 1] = placeholder;
                       elist.add(new EpuzzleState(stateCopy));
           
                     }
                   }
 
-                  // check if 0 is at the extreme left
+                  // check that 0 is not in the left column and swaps 0 with the number to the left
                   if (y != 0) {
                     if (x[y - 1] == 0) {
-                      int placeholder = stateCopy[pos][y];
-                      stateCopy[pos][y] = stateCopy[pos][y - 1];
-                      stateCopy[pos][y - 1] = placeholder;
+                      //standard code to swap 2 elements in an array
+                      int placeholder = stateCopy[rowPointer][y];
+                      stateCopy[rowPointer][y] = stateCopy[rowPointer][y - 1];
+                      stateCopy[rowPointer][y - 1] = placeholder;
                       elist.add(new EpuzzleState(stateCopy));
           
                     }
                   }
                 }
-                pos++;
+                //increment the row pointer
+                rowPointer++;
             }
-            
+
         //cast the puzzle states
         for(EpuzzleState es : elist) 
             slist.add((SearchState) es);

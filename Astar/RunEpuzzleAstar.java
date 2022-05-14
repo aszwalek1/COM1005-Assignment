@@ -8,7 +8,7 @@ public class RunEpuzzleAstar {
         int seed = 625;
         EpuzzGen gen = new EpuzzGen(seed);
         // generate puzzle providing difficulty
-        int d = 6;
+        int d = 12;
         int[][] puzz = gen.puzzGen(d);
         EpuzzleSearch searcher = new EpuzzleSearch();
 

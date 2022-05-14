@@ -7,7 +7,7 @@ public class EpuzzleState extends SearchState {
     
     // current state
     private int[][] state;
-    String method = "manhattan";
+    String method = "hamming";
 
     // constructor
     public EpuzzleState(int[][] s, int rc) {
